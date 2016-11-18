@@ -1,5 +1,7 @@
 package HomeTasks.Task_02_03_YahooFinanceXml;
-
+/*
+3. Написать парсер для Yahoo Finance в режиме XML (format=xml).
+*/
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
