@@ -9,7 +9,15 @@ import java.util.Arrays;
 @XmlRootElement(name = "results")
 public class Results {
 
-    public Rate[] rate;
+    private Rate[] rate;
+
+    public Rate[] getRate() {
+        return rate;
+    }
+
+    public void setRate(Rate[] rate) {
+        this.rate = rate;
+    }
 
     @Override
     public String toString() {
