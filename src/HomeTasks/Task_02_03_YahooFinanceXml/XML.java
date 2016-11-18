@@ -6,8 +6,17 @@ import javax.xml.bind.annotation.XmlElement;
  * Created by JIeIIIa on 18.11.2016.
  */
 public class XML {
+
+    private Query query;
+
+    public Query getQuery() {
+        return query;
+    }
+
     @XmlElement(name = "query")
-    public Query query;
+    public void setQuery(Query query) {
+        this.query = query;
+    }
 
     @Override
     public String toString() {
