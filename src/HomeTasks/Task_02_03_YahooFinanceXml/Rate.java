@@ -10,20 +10,70 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "rate")
 public class Rate {
-    @XmlAttribute
-    public String id;
-    @XmlElement
-    public String Name;
-    @XmlElement
-    public double Rate;
-    @XmlElement
-    public String Date;
-    @XmlElement
-    public String Time;
-    @XmlElement
-    public String Ask;
-    @XmlElement
-    public String Bid;
+
+    private String id;
+    private String Name;
+    private double Rate;
+    private String Date;
+    private String Time;
+    private String Ask;
+    private String Bid;
+
+    public String getId() {
+        return id;
+    }
+    @XmlAttribute(name="id")
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return Name;
+    }
+    @XmlAttribute(name="Name")
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public double getRate() {
+        return Rate;
+    }
+    @XmlAttribute(name="Rate")
+    public void setRate(double rate) {
+        Rate = rate;
+    }
+
+    public String getDate() {
+        return Date;
+    }
+    @XmlAttribute(name="Date")
+    public void setDate(String date) {
+        Date = date;
+    }
+
+    public String getTime() {
+        return Time;
+    }
+    @XmlAttribute(name="Time")
+    public void setTime(String time) {
+        Time = time;
+    }
+
+    public String getAsk() {
+        return Ask;
+    }
+    @XmlAttribute(name="Ask")
+    public void setAsk(String ask) {
+        Ask = ask;
+    }
+
+    public String getBid() {
+        return Bid;
+    }
+    @XmlAttribute(name="Bid")
+    public void setBid(String bid) {
+        Bid = bid;
+    }
 
     @Override
     public String toString() {
