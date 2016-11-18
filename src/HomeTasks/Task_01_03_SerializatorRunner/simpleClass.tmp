@@ -1,0 +1,10 @@
+->
+b
+->
+myClass
+first = 4
+<-
+x = 6
+<-
+d = 9
+s = test
