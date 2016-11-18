@@ -10,14 +10,42 @@ import java.util.Arrays;
  */
 @XmlRootElement(name = "query")
 public class Query {
+    private int count;
+    private String created;
+    private String lang;
+    private Results results;
+
+    public int getCount() {
+        return count;
+    }
     @XmlAttribute(namespace = "http://www.yahooapis.com/v1/base.rng")
-    public int count;
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getCreated() {
+        return created;
+    }
     @XmlAttribute(namespace = "http://www.yahooapis.com/v1/base.rng")
-    public String created;
+    public void setCreated(String created) {
+        this.created = created;
+    }
+
+    public String getLang() {
+        return lang;
+    }
     @XmlAttribute(namespace = "http://www.yahooapis.com/v1/base.rng")
-    public String lang;
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public Results getResults() {
+        return results;
+    }
     @XmlElement(name = "results")
-    public Results results;
+    public void setResults(Results results) {
+        this.results = results;
+    }
 
     @Override
     public String toString() {
