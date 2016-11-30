@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	<servlet>
+		<servlet-name>GetListChatRoom</servlet-name>
+		<servlet-class>ua.kiev.prog.chatee2.server.GetListChatRoomServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetListChatRoom</servlet-name>
+		<url-pattern>/getroom</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ManageChatRoom</servlet-name>
+		<servlet-class>ua.kiev.prog.chatee2.server.ManageChatRoomServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManageChatRoom</servlet-name>
+		<url-pattern>/manageroom</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Add</servlet-name>
+		<servlet-class>ua.kiev.prog.chatee2.server.AddServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Add</servlet-name>
+		<url-pattern>/add</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Authorization</servlet-name>
+		<servlet-class>ua.kiev.prog.chatee2.server.AuthorizationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Authorization</servlet-name>
+		<url-pattern>/authorization</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>UsersStatus</servlet-name>
+		<servlet-class>ua.kiev.prog.chatee2.server.GetUsersStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UsersStatus</servlet-name>
+		<url-pattern>/status</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>
