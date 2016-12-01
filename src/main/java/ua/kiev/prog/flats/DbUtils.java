@@ -3,6 +3,15 @@ package ua.kiev.prog.flats;
 import java.sql.*;
 
 public class DbUtils {
+    public static final String query =
+            "SELECT F.id AS 'ID', D.District AS 'District', D.address AS 'Address', " +
+            "F.storey AS Storey, F.Squar AS Squar, F.Price AS Price " +
+            "FROM Flats AS F " +
+            "LEFT JOIN (SELECT A.id AS id, A.address AS address, Districts.Title AS District " +
+            "FROM Addresses AS A " +
+            "LEFT JOIN Districts ON A.districtID = Districts.id " +
+            ") AS D ON F.addressID = D.id ";
+
     public static void initDb(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
         try {
@@ -122,38 +131,32 @@ public class DbUtils {
     }
 
     public static void showDb(Connection conn) throws SQLException {
-        String query = "SELECT F.id AS 'ID', D.Title AS 'District', D.address AS 'Address', " +
-                                "F.storey AS Storey, F.Squar AS Squar, F.Price AS Price " +
-                        "FROM Flats AS F " +
-                            "LEFT JOIN (SELECT A.id AS id, A.address AS address, Districts.Title AS Title " +
-                                        "FROM Addresses AS A " +
-                                            "LEFT JOIN Districts ON A.districtID = Districts.id " +
-                                        ") AS D ON F.addressID = D.id;";
         try (Statement st = conn.createStatement()) {
-            showResultSet(query, st);
+            ResultSet rs = st.executeQuery(query);
+            try {
+                showResultSet(rs);
+            } finally {
+                rs.close();
+            }
         }
     }
 
-    private static void showResultSet(String query, Statement statement) throws SQLException {
-        ResultSet rs = statement.executeQuery(query);
-        try {
-            ResultSetMetaData md = rs.getMetaData();
-            int[] widths = new int[]{15, 25, 25, 7, 7, 10};
+    public static void showResultSet(ResultSet rs) throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+        int[] widths = new int[]{15, 25, 25, 7, 7, 10};
 
+        for (int i = 0; i < md.getColumnCount(); i++) {
+            System.out.print(String.format("%" + md.getColumnDisplaySize(i+1) + "s |",md.getColumnName(i+1)));
+        }
+
+        System.out.println();
+        while (rs.next()) {
             for (int i = 0; i < md.getColumnCount(); i++) {
-                System.out.print(String.format("%" + md.getColumnDisplaySize(i+1) + "s |",md.getColumnName(i+1)));
+                System.out.print(String.format("%" + md.getColumnDisplaySize(i+1)  + "s |",rs.getString(i+1)));
             }
-
             System.out.println();
-            while (rs.next()) {
-                for (int i = 0; i < md.getColumnCount(); i++) {
-                    System.out.print(String.format("%" + md.getColumnDisplaySize(i+1)  + "s |",rs.getString(i+1)));
-                }
-                System.out.println();
-            }
-        } finally {
-            rs.close();
         }
     }
+
 
 }
