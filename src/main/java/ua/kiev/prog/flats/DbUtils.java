@@ -1,11 +1,9 @@
 package ua.kiev.prog.flats;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DbUtils {
-    public static boolean initDb(Connection conn) throws SQLException {
+    public static void initDb(Connection conn) throws SQLException {
         Statement statement = conn.createStatement();
         try {
             statement.execute("DROP TABLE IF EXISTS Flats;");
@@ -21,7 +19,7 @@ public class DbUtils {
 
             query = "CREATE TABLE IF NOT EXISTS Addresses (" +
                                     "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
-                                    "adress VARCHAR(60) NOT NULL," +
+                                    "address VARCHAR(60) NOT NULL," +
                                     "districtID INT NOT NULL," +
                                     "FOREIGN KEY FKdistrictIDinAddresses(districtID) REFERENCES Districts(id)" +
                     ");";
@@ -41,10 +39,121 @@ public class DbUtils {
         } finally {
             statement.close();
         }
-
-        return true;
     }
 
+    public static void fillDb(Connection conn) throws SQLException {
+        conn.setAutoCommit(false);
+        String query = "INSERT INTO Districts (Title) VALUES (?)";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "Main district");
+            ps.executeUpdate();
 
+            ps.setString(1, "Perfectvile");
+            ps.executeUpdate();
+
+            ps.setString(1, "Reachvile");
+            ps.executeUpdate();
+            conn.commit();
+        } finally {
+            conn.rollback();
+            conn.setAutoCommit(true);
+        }
+
+        conn.setAutoCommit(false);
+        query = "INSERT INTO Addresses (address, districtID) VALUES (?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, "First avenue");
+            ps.setInt(2, 1);
+            ps.executeUpdate();
+
+            ps.setString(1, "Sun street");
+            ps.setInt(2, 1);
+            ps.executeUpdate();
+
+            ps.setString(1, "Apple street");
+            ps.setInt(2, 1);
+            ps.executeUpdate();
+
+            ps.setString(1, "Yellow avenue");
+            ps.setInt(2, 2);
+            ps.executeUpdate();
+
+            ps.setString(1, "Shadow street");
+            ps.setInt(2, 3);
+            ps.executeUpdate();
+            conn.commit();
+        } finally {
+            conn.rollback();
+            conn.setAutoCommit(true);
+        }
+
+        conn.setAutoCommit(false);
+        query = "INSERT INTO Flats (addressID, storey, squar, price) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, 1);
+            ps.setInt(2, 1);
+            ps.setInt(3, 120);
+            ps.setInt(4, 100000);
+            ps.executeUpdate();
+
+            ps.setInt(1, 2);
+            ps.setInt(2, 3);
+            ps.setInt(3, 123);
+            ps.setInt(4, 123321);
+            ps.executeUpdate();
+
+            ps.setInt(1, 3);
+            ps.setInt(2, 2);
+            ps.setInt(3, 25);
+            ps.setInt(4, 55555);
+            ps.executeUpdate();
+
+            ps.setInt(1, 4);
+            ps.setInt(2, 16);
+            ps.setInt(3, 315);
+            ps.setInt(4, 456456);
+            ps.executeUpdate();
+
+            conn.commit();
+        } finally {
+            conn.rollback();
+            conn.setAutoCommit(true);
+        }
+    }
+
+    public static void showDb(Connection conn) throws SQLException {
+        String query = "SELECT F.id AS 'ID', D.Title AS 'District', D.address AS 'Address', " +
+                                "F.storey AS Storey, F.Squar AS Squar, F.Price AS Price " +
+                        "FROM Flats AS F " +
+                            "LEFT JOIN (SELECT A.id AS id, A.address AS address, Districts.Title AS Title " +
+                                        "FROM Addresses AS A " +
+                                            "LEFT JOIN Districts ON A.districtID = Districts.id " +
+                                        ") AS D ON F.addressID = D.id;";
+        try (Statement st = conn.createStatement()) {
+            showResultSet(query, st);
+        }
+    }
+
+    private static void showResultSet(String query, Statement statement) throws SQLException {
+        ResultSet rs = statement.executeQuery(query);
+        try {
+            ResultSetMetaData md = rs.getMetaData();
+            int[] widths = new int[]{15, 25, 25, 7, 7, 10};
+
+            for (int i = 0; i < md.getColumnCount(); i++) {
+                System.out.print(String.format("%" + md.getColumnDisplaySize(i+1) + "s |",md.getColumnName(i+1)));
+            }
+
+            System.out.println();
+            while (rs.next()) {
+                for (int i = 0; i < md.getColumnCount(); i++) {
+                    System.out.print(String.format("%" + md.getColumnDisplaySize(i+1)  + "s |",rs.getString(i+1)));
+                }
+                System.out.println();
+            }
+        } finally {
+            rs.close();
+        }
+    }
 
 }
