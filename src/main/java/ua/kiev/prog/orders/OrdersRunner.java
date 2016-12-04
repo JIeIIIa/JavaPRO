@@ -185,7 +185,7 @@ public class OrdersRunner {
         int productId = sc.nextInt();
         sc.nextLine();
         System.out.println("Order date: ");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         Date orderDate = sdf.parse(sc.nextLine());
 
         Order.add(conn, productId, clientId, orderDate);
@@ -202,7 +202,7 @@ public class OrdersRunner {
         int productId = sc.nextInt();
         sc.nextLine();
         System.out.println("Order date: ");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         Date orderDate = sdf.parse(sc.nextLine());
 
         Order.updateById(conn, productId, clientId, orderDate, id);

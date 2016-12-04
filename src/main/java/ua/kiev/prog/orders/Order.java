@@ -11,7 +11,7 @@ public class Order {
         PreparedStatement ps = conn.prepareStatement("INSERT INTO Orders(productId, clientId, orderDate) VALUES (?, ?, ?)");
         ps.setInt(1, productId);
         ps.setInt(2, clientId);
-        ps.setDate(3, new java.sql.Date(orderDate.getTime()));
+        ps.setTimestamp(3, new java.sql.Timestamp(orderDate.getTime()));
         ps.executeUpdate();
     }
 
@@ -19,7 +19,7 @@ public class Order {
         PreparedStatement ps = conn.prepareStatement("UPDATE Orders SET productId = ?, clientId = ?, orderDate = ? WHERE id = ?)");
         ps.setInt(1, productId);
         ps.setInt(2, clientId);
-        ps.setDate(3, new java.sql.Date(orderDate.getTime()));
+        ps.setTimestamp(3, new java.sql.Timestamp(orderDate.getTime()));
         ps.setInt(4, id);
         ps.executeUpdate();
     }
