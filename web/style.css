@@ -1,0 +1,54 @@
+* {
+  font-size:20pt;
+}
+
+h1 {
+	color: darkblue;                             (цвет текста)
+	font-weight: bold;                		(шрифт жирным)
+	font-family: arial;
+	font-size: 40pt;
+}
+
+h2 {
+	color: black;                             (цвет текста)
+	font-weight: bold;                		(шрифт жирным)
+	font-family: arial;
+	font-size: 30pt;
+}
+
+h3 {
+	color: black;                             (цвет текста)
+font-style: italic;                		(шрифт жирным)
+font-family: arial;
+	font-size: 20pt;
+}
+
+.ttl {
+	color: darkblue;                             (цвет текста)
+	font-weight: bold;                		(шрифт жирным)
+	font-family: arial;
+	text-align: center;
+}
+
+.leftcell {
+	color: green;                             (цвет текста)
+	font-weight: bold;                		(шрифт жирным)
+	font-family: arial;
+	font-size: 150%;
+}
+
+
+.wright {
+	color: green;                             (цвет текста)
+font-style: italic;                		(шрифт жирным)
+font-family: arial;
+	font-size: 100%;
+}
+
+
+.wrong {
+	color: red;                             (цвет текста)
+font-weight: italic;                		(шрифт жирным)
+font-family: arial;
+	font-size: 100%;
+}

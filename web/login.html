@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Авторизация пользователя</title>
+	<meta http-equiv="Content-Type" content="text/html; charset = "UTF-8" />
+	<link rel="icon" href="favicon.ico" />
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	
+
+	<style type="text/css">
+		TABLE {
+			background: grey; /* Цвет фона таблицы */
+			color: black; /* Цвет текста */
+			 
+		}
+		TD {
+			background: white; /* Цвет фона ячеек */
+			text-align: left;
+			
+		}
+		
+		
+  </style>
+  
+</head>
+<body>
+
+	<form name="test" method="get" action="testing.jsp">
+		<table cellspacing="5"; cellpadding="5" border="1" align="center">
+			<tr>
+				<td colspan="2"><h1 align="center">Авторизация пользователя</h1></td>	
+			</tr>
+			<tr>
+				<td><span class="leftcell">Имя</span></td>
+				<td><input name="Name" type="text" size="60"></td>
+			</tr>
+			<tr>
+				<td><span class="leftcell">Фамилия</span></td>
+				<td><input name="SurName" type="text" size="60"></td>
+			</tr>
+			<tr>
+				<td><span class="leftcell">Возраст</span></td>
+				<td><input name="Age" type="number" min="0" max="120" step="1" size="60"></td>
+			</tr>
+			<tr>
+				<th colspan="2"><input type="submit" value="Отправить" size="60">
+								<input type="reset" value="Очистить">
+				</th>
+			</tr>
+		
+		</table>
+	</form>
+</body>
+
+</html>
