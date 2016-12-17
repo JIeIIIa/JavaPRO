@@ -4,11 +4,10 @@ package ua.kiev.prog;/*
 так, чтобы их суммарный вес был не более 1 КГ.
 */
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import java.text.ParseException;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -47,6 +46,9 @@ public class Runner {
                         break;
                     case "4":
                         byCost(em);
+                        break;
+                    case "5":
+                        onlyWithDiscount(em);
                         break;
                 }
             }
@@ -115,7 +117,16 @@ public class Runner {
     }
 
     public static void onlyWithDiscount(EntityManager em) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Menu> query = cb.createQuery(Menu.class);
+        Root<Menu> from = query.from(Menu.class);
+        query.select(from).where(cb.gt(from.<Integer>get("discount"), 0));
+        TypedQuery<Menu> result = em.createQuery(query);
+        List<Menu> list = result.getResultList();
 
+        for (Menu menu : list) {
+            System.out.println(menu);
+        }
     }
 
     public static void showMenu(EntityManager em) {
