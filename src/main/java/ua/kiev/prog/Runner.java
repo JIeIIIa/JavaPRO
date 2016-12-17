@@ -8,9 +8,7 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Runner {
     static private Scanner scanner = new Scanner(System.in);
@@ -28,6 +26,7 @@ public class Runner {
                 System.out.println("3 - Create dish");
                 System.out.println("4 - Choose by cost");
                 System.out.println("5 - Only with discount");
+                System.out.println("6 - Set with a total weight less than 1 kg ");
                 System.out.println();
                 System.out.println("0 - Exit");
                 c = scanner.nextLine();
@@ -49,6 +48,9 @@ public class Runner {
                         break;
                     case "5":
                         onlyWithDiscount(em);
+                        break;
+                    case "6":
+                        chooseDishesByWeight(em, 1.0);
                         break;
                 }
             }
@@ -111,9 +113,7 @@ public class Runner {
         query.setParameter("minCost", (int)(min*100));
         query.setParameter("maxCost", (int)(max*100));
         List<Menu> result = query.getResultList();
-        for (Menu menu : result) {
-            System.out.println(menu);
-        }
+        print(result);
     }
 
     public static void onlyWithDiscount(EntityManager em) {
@@ -124,9 +124,7 @@ public class Runner {
         TypedQuery<Menu> result = em.createQuery(query);
         List<Menu> list = result.getResultList();
 
-        for (Menu menu : list) {
-            System.out.println(menu);
-        }
+        print(list);
     }
 
     public static void showMenu(EntityManager em) {
@@ -134,10 +132,38 @@ public class Runner {
             System.out.println("MENU:");
             Query query = em.createNamedQuery("showAll", Menu.class);
             List<Menu> result = query.getResultList();
-            for (Menu menu : result) {
-                System.out.println(menu);
-            }
+            print(result);
         } catch (Exception e) { /*NOP*/}
+    }
+
+    private static void print(List<Menu> list) {
+        for (Menu menu : list) {
+            System.out.println(menu);
+        }
+    }
+
+    public static void chooseDishesByWeight(EntityManager em, double totalWeight) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Menu> cq = cb.createQuery(Menu.class);
+        Root<Menu> from = cq.from(Menu.class);
+        cq.select(from)
+                .where(cb.lt(from.<Double>get("weight"), totalWeight))
+                .orderBy(cb.asc(from.<Double>get("weight")));
+        List<Menu> result = em.createQuery(cq).getResultList();
+
+        double currentWeight = 0.0;
+        List<Menu> choose = new ArrayList<>();
+
+        for (Menu menu : result) {
+            if (menu.getWeight() < totalWeight - currentWeight) {
+                currentWeight += menu.getWeight();
+                choose.add(menu);
+            }
+        }
+
+        System.out.println("You may choose this dishes");
+        print(choose);
+        System.out.println(String.format("Total weight = %.3f", currentWeight));
     }
 }
 
